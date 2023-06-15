@@ -1,0 +1,10 @@
+<h1>Your Courses</h1>
+<ul>
+  <% @courses.each do |course| %>
+    <% unless course.user_id != current_user.id %>
+      <li>
+        <%= link_to course.title, course %>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

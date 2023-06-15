@@ -1,0 +1,17 @@
+<% if user_signed_in? %>
+<h1>Welcome</h1>
+  <ul>
+    <% @courses.each do |course| %>
+      <section>
+          <h3><%=course.title%></h3>
+          <%=course.description%>
+          <%=course.id%>
+          <%=course.user_id%>
+          <%= current_user.id %><br>
+          <button>Buy</button>
+      </section><wbr>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Please sign in to view the courses.</p>
+<% end %>

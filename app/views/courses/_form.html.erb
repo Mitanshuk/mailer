@@ -1,0 +1,11 @@
+<%= form_with(model: course, url: course.persisted? ? course_path(course) : courses_path, method: course.persisted? ? :patch : :post) do |form| %>
+  <%= form.label :title %>
+  <%= form.text_field :title %>
+
+  <%= form.label :description %>
+  <%= form.text_area :description %>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
+  <%= form.submit course.persisted? ? "Update Course" : "Create Course" %>
+<% end %>

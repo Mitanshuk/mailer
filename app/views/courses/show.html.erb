@@ -1,0 +1,8 @@
+<h1><%= @course.title %></h1>
+
+<p><%= @course.description %></p>
+
+<ul>
+  <li><%= link_to 'Edit', edit_course_path(@course) %></li>
+  <li><%= link_to 'Delete', courses_path(@course), method: :delete, data: { confirm: 'Are you sure?' } %></li>
+</ul>

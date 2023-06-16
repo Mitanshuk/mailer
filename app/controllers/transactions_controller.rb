@@ -1,21 +1,51 @@
 class TransactionsController < ApplicationController
+    before_action :set_transaction, only: [:show, :edit, :update, :destroy]
 
-  def index
-    @transaction = Transaction.all
-  end
+    def index
+      @transactions = Transaction.all
+    end
 
-  def create
-    @transaction = Transaction.new(transaction_params)
-    if @transaction.save
-      redirect_to @transaction, notice: 'Transaction was successfully created.'
-    else
-      render :new
+    def show
+    end
+
+    def new
+      @transaction = Transaction.new
+    end
+
+    def create
+        @transaction = Transaction.new(transaction_params)
+        @transaction.student_id = current_user.id
+
+        if @transaction.save
+          redirect_to transactions_path, notice: 'Transaction was successfully created.'
+        else
+          render :new
+        end
+      end
+
+    def edit
+    end
+
+    def update
+      if @transaction.update(transaction_params)
+        redirect_to @transaction, notice: 'Transaction was successfully updated.'
+      else
+        render :edit
+      end
+    end
+
+    def destroy
+      @transaction.destroy
+      redirect_to transactions_url, notice: 'Transaction was successfully destroyed.'
+    end
+
+    private
+
+    def set_transaction
+      @transaction = Transaction.find(params[:id])
+    end
+
+    def transaction_params
+      params.require(:transaction).permit(:course_id, :student_id, :tutor_id, :status)
     end
   end
-
-  private
-
-  def transaction_params
-    params.require(:transaction).permit(:course_id, :student_id, :tutor_id, :status)
-  end
-end

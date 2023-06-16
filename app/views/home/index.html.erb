@@ -1,15 +1,22 @@
 <% if user_signed_in? %>
-<h1>Welcome</h1>
+  <%= link_to "Your Learning", transactions_path %>
+  <h1>Upskill Yourself With...</h1>
+
   <ul>
     <% @courses.each do |course| %>
-      <section>
-          <h3><%=course.title%></h3>
-          <%=course.description%>
-          <%=course.id%>
-          <%=course.user_id%>
-          <%= current_user.id %><br>
-          <button>Buy</button>
-      </section><wbr>
+      <% unless current_user.transactions.exists?(course_id: course.id) %>
+        <section>
+          <h3><%= course.title %></h3>
+          <%= course.description %>
+          <%= form_with(model: Transaction.new, url: transactions_path, method: :post) do |form| %>
+            <%= form.hidden_field :course_id, value: course.id %>
+            <%= form.hidden_field :tutor_id, value: course.user_id %>
+            <%= form.hidden_field :student_id, value: current_user.id %>
+            <%= form.submit "Buy Course" %>
+          <% end %>
+        </section>
+        <wbr>
+      <% end %>
     <% end %>
   </ul>
 <% else %>

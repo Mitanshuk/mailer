@@ -1,5 +1,6 @@
 <h1>Your Learning</h1>
 <ul>
+  <%= link_to "Buy new Courses", root_path %>
   <% @transactions.each do |transaction| %>
   <% if current_user.id == transaction.student_id && transaction.course.id == transaction.course_id%>
       <section>

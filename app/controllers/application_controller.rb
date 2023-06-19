@@ -10,13 +10,15 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     if resource.is_a?(User)
       if resource.tutor?
-
-        new_course_path
-      else
+        courses_path
+      elsif resource.student?
         root_path
+      else
+        puts "page not found"
       end
     else
-      root_path
+      # root_path
+      puts "page not found"
     end
   end
 end

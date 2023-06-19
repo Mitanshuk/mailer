@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_15_133615) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_19_113341) do
   create_table "courses", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
+    t.decimal "price"
     t.index ["user_id"], name: "index_courses_on_user_id"
   end
 
@@ -42,6 +43,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_133615) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.string "user_type"
+    t.datetime "confirmed_at"
+    t.string "confirmation_token"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -27,24 +27,26 @@ class CoursesController < ApplicationController
 
   def update
     if @course.update(course_params)
-      redirect_to @course, notice: 'Course was successfully updated.'
+      redirect_to courses_path, notice: 'Course was successfully updated.'
     else
       render :edit
     end
   end
 
   def destroy
-    @course.delete
+    byebug
+    @course.destroy
     redirect_to courses_path, notice: 'Course was successfully destroyed.'
   end
 
   private
 
   def set_course
+    byebug
     @course = Course.find(params[:id])
   end
 
   def course_params
-    params.require(:course).permit(:title, :description, :user_id)
+    params.require(:course).permit(:title, :description, :user_id, :price)
   end
 end

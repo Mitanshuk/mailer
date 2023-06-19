@@ -2,9 +2,9 @@
 <ul>
   <% @courses.each do |course| %>
     <% unless course.user_id != current_user.id %>
-      <li>
+      <h3>
         <%= link_to course.title, course %>
-      </li>
+      </h3>
     <% end %>
   <% end %>
 </ul>

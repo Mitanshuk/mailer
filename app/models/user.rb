@@ -5,5 +5,5 @@ class User < ApplicationRecord
   enum user_type: { student: 'student', tutor: 'tutor' }
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :confirmable
 end

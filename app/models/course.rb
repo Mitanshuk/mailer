@@ -4,4 +4,7 @@ class Course < ApplicationRecord
 
   validates :title, presence: true
   validates :price, presence: true
+  mount_uploader :video, VideoUploader
+  mount_uploader :image, ImageUploader
+  mount_uploader :pdf, PdfUploader
 end

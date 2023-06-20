@@ -1,12 +1,13 @@
-<h1><%= @course.title %></h1>
-
-<p><%= @course.description %></p>
-
-<ul>
-  <li><%= button_to 'Edit', edit_course_path(@course) %></li>
-  <li><%#= link_to "Destroy", course_path(@course), data: {
-                  turbo_method: :delete,
-                  turbo_confirm: "Are you sure?"
-                } %></li>
-  <li><%= button_to "Destroy", course_path(@course), method: :delete%></li>
-</ul>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <h1><%= @course.title %></h1>
+      <p><%= @course.description %></p>
+      <%= video_tag @course.video_url.to_s, controls: true, width: '30%', height: 'auto' %>
+      <%= image_tag @course.image_url.to_s, controls: true, width: '30%', height: 'auto' %>
+      <%= link_to 'View PDF', @course.pdf_url.to_s, class: 'btn btn-primary' %>
+      <h3><%= link_to 'Edit', edit_course_path(@course), class: 'btn btn-success' %></h3>
+      <%= button_to "Destroy", course_path(@course), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+    </div>
+  </div>
+</div>

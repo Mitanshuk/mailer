@@ -1,13 +1,14 @@
 <% if user_signed_in? %>
-  <%= link_to "Your Learning", transactions_path %>
+  <%= link_to "Your Learning", transactions_path, class: 'btn btn-success' %>
   <h1>Upskill Yourself With...</h1>
 
   <ul>
     <% @courses.each do |course| %>
        <% unless Transaction.all.where(student_id: current_user.id).pluck(:course_id).include?(course.id) %>
         <section>
-          <h3><%= course.title %></h3>
-          <%= course.description %>
+          <h2><%= course.title %></h2>
+          <%= image_tag course.image_url.to_s, controls: true, width: '200', height: 'auto' %>
+          <h5><%= course.description %></h5>
           <p>at just @<b><%= course.price %></b></p>
           <%= form_with(model: Transaction.new, url: transactions_path, method: :post) do |form| %>
             <%= form.hidden_field :course_id, value: course.id %>
@@ -20,6 +21,6 @@
       <% end %>
     <% end %>
   </ul>
-<% else %>
-  <p>Please sign in to view the courses.</p>
+<%# else %>
+  <!-- <p>Please sign in to view the courses.</p> -->
 <% end %>

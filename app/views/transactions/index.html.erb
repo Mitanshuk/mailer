@@ -1,11 +1,13 @@
 <h1>Your Learning</h1>
+<%= link_to "Buy new Courses", root_path %>
 <ul>
-  <%= link_to "Buy new Courses", root_path %>
   <% @transactions.each do |transaction| %>
   <% if current_user.id == transaction.student_id && transaction.course.id == transaction.course_id%>
       <section>
       <h1><%= transaction.course.title %></h1>
       <%= transaction.course.description %><br>
+      <%= video_tag transaction.course.video_url.to_s, controls: true, width: '300', height: 'auto' %><br>
+      <%= link_to 'View Notes', transaction.course.pdf_url.to_s %>
       </section>
       <wbr>
     <% end %>

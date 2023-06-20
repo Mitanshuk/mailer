@@ -3,7 +3,7 @@
   <% @courses.each do |course| %>
     <% unless course.user_id != current_user.id %>
       <h3>
-        <%= link_to course.title, course %>
+        <%= link_to course.title, course %><wbr>
       </h3>
     <% end %>
   <% end %>

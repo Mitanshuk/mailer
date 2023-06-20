@@ -4,18 +4,11 @@
 
   <ul>
     <% @courses.each do |course| %>
-    <%# byebug %>
-
-
-
-
-
-
        <% unless Transaction.all.where(student_id: current_user.id).pluck(:course_id).include?(course.id) %>
         <section>
           <h3><%= course.title %></h3>
           <%= course.description %>
-          <p>at just @<%= course.price %></p>
+          <p>at just @<b><%= course.price %></b></p>
           <%= form_with(model: Transaction.new, url: transactions_path, method: :post) do |form| %>
             <%= form.hidden_field :course_id, value: course.id %>
             <%= form.hidden_field :tutor_id, value: course.user_id %>

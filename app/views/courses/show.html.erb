@@ -3,10 +3,10 @@
 <p><%= @course.description %></p>
 
 <ul>
-  <li><%= link_to 'Edit', edit_course_path(@course) %></li>
-  <#%byebug%>
-  <li><%= link_to "Destroy", course_path(@course), data: {
+  <li><%= button_to 'Edit', edit_course_path(@course) %></li>
+  <li><%#= link_to "Destroy", course_path(@course), data: {
                   turbo_method: :delete,
                   turbo_confirm: "Are you sure?"
                 } %></li>
+  <li><%= button_to "Destroy", course_path(@course), method: :delete%></li>
 </ul>

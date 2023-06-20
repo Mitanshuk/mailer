@@ -34,15 +34,13 @@ class CoursesController < ApplicationController
   end
 
   def destroy
-    byebug
-    @course.destroy
+    @course.delete
     redirect_to courses_path, notice: 'Course was successfully destroyed.'
   end
 
   private
 
   def set_course
-    byebug
     @course = Course.find(params[:id])
   end
 

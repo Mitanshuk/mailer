@@ -13,12 +13,9 @@ class ApplicationController < ActionController::Base
         courses_path
       elsif resource.student?
         root_path
-      else
-        puts "page not found"
       end
     else
-      # root_path
-      puts "page not found"
+      root_path
     end
   end
 end

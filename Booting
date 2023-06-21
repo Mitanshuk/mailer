@@ -1,0 +1,10 @@
+*** SIGUSR2 not implemented, signal based restart unavailable!
+*** SIGUSR1 not implemented, signal based restart unavailable!
+*** SIGHUP not implemented, signal based logs reopening unavailable!
+Puma starting in single mode...
+* Puma version: 6.2.2 (ruby 3.0.6-p216) ("Speaking of Now")
+*  Min threads: 5
+*  Max threads: 5
+*  Environment: development
+*          PID: 15908
+! Unable to load application: Gem::LoadError: You have already activated rack 3.0.7, but your Gemfile requires rack 2.2.7. Prepending `bundle exec` to your command may solve this.

@@ -4,7 +4,7 @@
 
   <ul>
     <% @courses.each do |course| %>
-       <% unless Transaction.all.where(student_id: current_user.id).pluck(:course_id).include?(course.id) %>
+      <% unless Transaction.all.where(student_id: current_user.id).pluck(:course_id).include?(course.id) %>
         <section>
           <h2><%= course.title %></h2>
           <%= image_tag course.image_url.to_s, controls: true, width: '200', height: 'auto' %>
@@ -16,11 +16,19 @@
             <%= form.hidden_field :student_id, value: current_user.id %>
             <%= form.submit "Buy Course" %>
           <% end %>
+          <% if course.feedbacks.any? %>
+            <h3>Feedbacks:</h3>
+            <ul>
+              <% course.feedbacks.each do |feedback| %>
+                <li><%= feedback.comment %></li>
+              <% end %>
+            </ul>
+          <% end %>
         </section>
         <wbr>
       <% end %>
     <% end %>
   </ul>
-<%# else %>
-  <!-- <p>Please sign in to view the courses.</p> -->
+<% else %>
+  <p>Please sign in to view the courses.</p>
 <% end %>

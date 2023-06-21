@@ -2,12 +2,26 @@
 <%= link_to "Buy new Courses", root_path %>
 <ul>
   <% @transactions.each do |transaction| %>
-  <% if current_user.id == transaction.student_id && transaction.course.id == transaction.course_id%>
+    <% if current_user.id == transaction.student_id && transaction.course.id == transaction.course_id %>
       <section>
-      <h1><%= transaction.course.title %></h1>
-      <%= transaction.course.description %><br>
-      <%= video_tag transaction.course.video_url.to_s, controls: true, width: '300', height: 'auto' %><br>
-      <%= link_to 'View Notes', transaction.course.pdf_url.to_s %>
+        <h1><%= transaction.course.title %></h1>
+        <%= transaction.course.description %><br>
+        <%= video_tag transaction.course.video_url.to_s, controls: true, width: '300', height: 'auto' %><br>
+        <%= link_to 'View Notes', transaction.course.pdf_url.to_s %>
+
+        <% unless transaction.course.feedbacks.exists?(student_id: current_user.id) %>
+          <%= form_with(model: Feedback.new, url: feedbacks_path, method: :post) do |form| %>
+            <%= form.hidden_field :student_id, value: current_user.id %>
+            <%= form.hidden_field :course_id, value: transaction.course.id %>
+
+            <div class="field">
+              <%= form.label :comment %>
+              <%= form.text_area :comment %>
+            </div>
+
+            <%= form.submit "Submit Feedback" %>
+          <% end %>
+        <% end %>
       </section>
       <wbr>
     <% end %>

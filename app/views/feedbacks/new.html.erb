@@ -1,0 +1,12 @@
+<h3>Leave Feedback:</h3>
+<%= form_with(model: Feedback.new, url: feedbacks_path, method: :post) do |form| %>
+  <%= form.hidden_field :student_id, value: current_user.id %>
+  <%= form.hidden_field :course_id, value: @course.id %>
+
+  <div class="field">
+    <%= form.label :comment %>
+    <%= form.text_area :comment %>
+  </div>
+
+  <%= form.submit "Submit Feedback" %>
+<% end %>

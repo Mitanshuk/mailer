@@ -1,27 +1,29 @@
-<h1>Your Learning</h1>
-<%= link_to "Buy new Courses", root_path %>
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+</head>
+<%= link_to "Buy new Courses", root_path, class:"btn btn-success" %></br></br>
+<h1 class="text-center">Your Learning</h1>
 <ul>
   <% @transactions.each do |transaction| %>
-    <% if current_user.id == transaction.student_id && transaction.course.id == transaction.course_id %>
+  <% if current_user.id == transaction.student_id && transaction.course.id == transaction.course_id%>
       <section>
-        <h1><%= transaction.course.title %></h1>
-        <%= transaction.course.description %><br>
-        <%= video_tag transaction.course.video_url.to_s, controls: true, width: '300', height: 'auto' %><br>
-        <%= link_to 'View Notes', transaction.course.pdf_url.to_s %>
+      <h1><%= transaction.course.title %></h1>
+      <h3><%= transaction.course.description %></h3><br>
+      <%= video_tag transaction.course.video_url.to_s, controls: true, width: '300', height: 'auto' %><br>
+      <%= link_to 'View Notes', transaction.course.pdf_url.to_s, class:"btn btn-info btn-large" %>
+      <% unless transaction.course.feedbacks.exists?(student_id: current_user.id) %>
+        <%= form_with(model: Feedback.new, url: feedbacks_path, method: :post) do |form| %>
+          <%= form.hidden_field :student_id, value: current_user.id %>
+          <%= form.hidden_field :course_id, value: transaction.course.id %>
 
-        <% unless transaction.course.feedbacks.exists?(student_id: current_user.id) %>
-          <%= form_with(model: Feedback.new, url: feedbacks_path, method: :post) do |form| %>
-            <%= form.hidden_field :student_id, value: current_user.id %>
-            <%= form.hidden_field :course_id, value: transaction.course.id %>
+          <div class="field">
+            <%= form.label :comment %>
+            <%= form.text_area :comment %>
+          </div>
 
-            <div class="field">
-              <%= form.label :comment %>
-              <%= form.text_area :comment %>
-            </div>
-
-            <%= form.submit "Submit Feedback" %>
-          <% end %>
+          <%= form.submit "Submit Feedback" %>
         <% end %>
+      <% end %>
       </section>
       <wbr>
     <% end %>

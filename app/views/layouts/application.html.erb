@@ -9,22 +9,31 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <% if user_signed_in? %>
+    <% if notice.present? || alert.present? %>
+      <div class="alert">
+        <% if notice.present? %>
+          <p class="notice alert alert-success"><%= notice %></p>
+        <% end %>
+        <% if alert.present? %>
+          <p class="alert alert-danger"><%= alert %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if user_signed_in? %><br>
       <%= current_user.email %>
       <%= link_to "Edit profile", edit_user_registration_path, class: "btn btn-primary" %>
       <%= link_to 'Log Out', destroy_user_session_path,  data: { turbo_method: :delete }, class: "btn btn-danger" %>
       <% if current_user.tutor? %>
-        <%= link_to "Add Course", new_course_path, class: "btn btn-primary" %>
+        <%= link_to "Add Course", new_course_path, class: "btn btn-success" %>
       <% end %>
     <% else %>
 
       <h1 class="display">Improve Yourself with Us</h1>
       <p>Join us today and unlock the power of interactive learning at your fingertips!</p>
       <p class="lead">
-        <%= link_to 'Log In', new_user_session_path, class: "btn btn-primary btn-md" %>
-        <%= link_to 'Sign Up', new_user_registration_path, class: "btn btn-primary btn-md" %>
+        <%= link_to 'Log In', new_user_session_path, class: "btn btn-primary btn-md text-dark" %>
+        <%= link_to 'Sign Up', new_user_registration_path, class: "btn btn-info btn-md" %>
       </p>
     <% end %>
     <%= yield %>

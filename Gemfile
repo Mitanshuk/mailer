@@ -72,5 +72,15 @@ group :test do
 end
 gem "devise"
 gem 'jquery-rails'
-gem 'carrierwave'
+# gem 'carrierwave'
 gem 'bootstrap-sass'
+gem 'activeadmin'
+gem 'activestorage'
+gem 'active_model_serializers'
+gem 'omniauth'
+gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-google-oauth2'
+gem 'jwt'
+gem 'bcrypt'
+gem 'devise-jwt'
+gem 'rack-cors'

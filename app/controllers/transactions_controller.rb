@@ -17,7 +17,7 @@ class TransactionsController < ApplicationController
         @transaction.student_id = current_user.id
 
         if @transaction.save
-          PurchaseMailer.confirmation_email(@transaction.course, @transaction.student).deliver_now
+          PurchaseMailer.confirmation_email(@transaction.course, @transaction.student).deliver_later
           redirect_to transactions_path, notice: 'Transaction was successfully created.'
         else
           render :new

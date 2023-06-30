@@ -10,6 +10,12 @@ Devise.setup do |config|
   config.expire_all_remember_me_on_sign_out = true
   config.scoped_views = true
 
+  config.omniauth :google_oauth2, '192085583881-p7f2pes6kd43955hkh1u7bh8tv12p6i6.apps.googleusercontent.com', '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', scope: 'email'
+
+  config.jwt do |jwt|
+    jwt.secret = Rails.application.credentials.devise[:jwt_secret_key]
+  end
+
   # If true, extends the user's remember period when remembered via cookie.
   # config.extend_remember_period = false
 

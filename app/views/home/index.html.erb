@@ -1,42 +1,57 @@
 <head>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+  <style>
+    .feedback-container {
+      display: none; /* Hide the feedback initially */
+    }
+  </style>
+  <script>
+    function toggleFeedback() {
+      var feedbackContainer = document.getElementById("feedback-container");
+      feedbackContainer.style.display = feedbackContainer.style.display === "none" ? "block" : "none";
+    }
+  </script>
 </head>
 
 <% if user_signed_in? %>
   <%= link_to "Your Learning", transactions_path, class: 'btn btn-success' %><hr>
-  <h1 class="font-weight-bold rounded" style="background:grey; color:white; margin:5px; padding:5px; text-align:center">Upskill Yourself With...</h1></br>
+  <h1 class="font-weight-bold rounded" style="background:grey; color:white; margin:5px; padding:5px; text-align:center">Upskill Yourself With...</h1><br>
 
-  <ul>
+  <div class="row">
     <% @courses.each do |course| %>
-       <% unless Transaction.all.where(student_id: current_user.id).pluck(:course_id).include?(course.id) %>
-        <div class="card border" style="width: 18rem;">
-          <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-          <%= image_tag course.image_url.to_s, controls: true, width: '200', height: 'auto', class:"card-img-top" %>
-          <div class="card-body">
-            <!-- <h5 class="card-title">Card title</h5> -->
-            <h3 class="card-title"><%= course.title %></h3>
-            <p class="card-text"><%= course.description %></p><br>
-            <p>at just @<b><%= course.price %></b>
-            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-            <%= form_with(model: Transaction.new, url: transactions_path, method: :post) do |form| %>
-              <%= form.hidden_field :course_id, value: course.id %>
-              <%= form.hidden_field :tutor_id, value: course.user_id %>
-              <%= form.hidden_field :student_id, value: current_user.id %>
-              <%= form.submit "Buy Course" %>
+      <% unless Transaction.all.where(student_id: current_user.id).pluck(:course_id).include?(course.id) %>
+        <div class="col-md-4">
+          <div class="card border" style="width: 18rem;">
+            <% if course.image.attached? %>
+              <%= image_tag course.image, width: '200', height: 'auto', class:"card-img-top" %>
+            <% else %>
+              <p>No image attached.</p>
             <% end %>
-                      <% if course.feedbacks.any? %>
-            <h3>Feedbacks:</h3>
-            <ul>
-              <% course.feedbacks.each do |feedback| %>
-                <li><%= feedback.comment %></li>
+            <div class="card-body">
+              <h3 class="card-title"><%= course.title %></h3>
+              <p class="card-text"><%= course.description %></p><br>
+              <p>at just @<b><%= course.price %></b></p>
+              <%= form_with(model: Transaction.new, url: transactions_path, method: :post) do |form| %>
+                <%= form.hidden_field :course_id, value: course.id %>
+                <%= form.hidden_field :tutor_id, value: course.user_id %>
+                <%= form.hidden_field :student_id, value: current_user.id %>
+                <%= form.submit "Buy Course" %>
               <% end %>
-            </ul>
-          <% end %>
+              <% if course.feedbacks.any? %>
+                <h3>Feedbacks:</h3>
+                <button onclick="toggleFeedback()">Show Feedback</button>
+                <div id="feedback-container" class="feedback-container">
+                  <ul>
+                    <% course.feedbacks.each do |feedback| %>
+                      <li><%= feedback.comment %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+            </div>
           </div>
         </div>
       <% end %>
     <% end %>
-  </ul>
-<%# else %>
-  <!-- <p>Please sign in to view the courses.</p> -->
+  </div>
 <% end %>

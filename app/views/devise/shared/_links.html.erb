@@ -1,9 +1,23 @@
+<style>
+.custom{
+  align-items: center;
+  text-align: center;
+}
+</style>
+
+</br><div class="container custom">
+  <div class="row justify-content-center">
+    <% if devise_mapping.omniauthable? %>
+      <% resource_class.omniauth_providers.each do |provider| %>
+        <% provider_name = provider.to_s.gsub('oauth2', '').capitalize %>
+        <%= button_to "Sign in with Google", omniauth_authorize_path(resource_name, provider), data: { turbo: false }, class: "btn btn-primary mb-3" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
 <%- if controller_name != 'sessions' %>
   <%= link_to "Log in", new_session_path(resource_name) %><br />
-<% end %>
-
-<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to "Sign up", new_registration_path(resource_name) %><br />
 <% end %>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
@@ -18,8 +32,3 @@
   <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
 <% end %>
 
-<%- if devise_mapping.omniauthable? %>
-  <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false } %><br />
-  <% end %>
-<% end %>

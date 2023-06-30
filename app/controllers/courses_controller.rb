@@ -3,9 +3,16 @@ class CoursesController < ApplicationController
 
   def index
     @courses = Course.all
+    render json: @courses, each_serializer: CourseSerializer
+    # render json: @courses
   end
 
   def show
+    # if @course
+    #   render json: @course
+    # else
+    #   render json: { message: 'Unable to find Course with this ID' }, status: 400
+    # end
   end
 
   def new
@@ -17,6 +24,7 @@ class CoursesController < ApplicationController
 
     if @course.save
       redirect_to courses_path, notice: 'Course was successfully created.'
+      render json: @course
     else
       render :new
     end
@@ -27,6 +35,7 @@ class CoursesController < ApplicationController
 
   def update
     if @course.update(course_params)
+      render json: @courses
       redirect_to courses_path, notice: 'Course was successfully updated.'
     else
       render :edit
@@ -34,7 +43,14 @@ class CoursesController < ApplicationController
   end
 
   def destroy
-    @course.delete
+    # byebug
+    @course = Course.find(params[:id])
+    # @course.delete
+    # @course.user_id = nil
+    # @course.update(:user_id, nil)
+    @course.update_attribute(:user_id, nil)
+
+    # render json: @courses
     redirect_to courses_path, notice: 'Course was successfully destroyed.'
   end
 
@@ -45,6 +61,6 @@ class CoursesController < ApplicationController
   end
 
   def course_params
-    params.require(:course).permit(:title, :description, :user_id, :price, :video, :image,:pdf)
+    params.require(:course).permit(:title, :description, :user_id, :price, :video, :image, :pdf)
   end
 end

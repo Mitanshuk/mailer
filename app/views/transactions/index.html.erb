@@ -9,8 +9,8 @@
       <section>
       <h1><%= transaction.course.title %></h1>
       <h3><%= transaction.course.description %></h3><br>
-      <%= video_tag transaction.course.video_url.to_s, controls: true, width: '300', height: 'auto' %><br>
-      <%= link_to 'View Notes', transaction.course.pdf_url.to_s, class:"btn btn-info btn-large" %>
+      <%= video_tag url_for(transaction.course.video), controls: true, width: '300', height: 'auto' %><br>
+      <%= link_to 'View Notes', rails_blob_path(transaction.course.pdf), class:"btn btn-info btn-large" %>
       <% unless transaction.course.feedbacks.exists?(student_id: current_user.id) %>
         <%= form_with(model: Feedback.new, url: feedbacks_path, method: :post) do |form| %>
           <%= form.hidden_field :student_id, value: current_user.id %>
